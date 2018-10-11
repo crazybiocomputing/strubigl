@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf8">
+<title>StruBiGL</title>
+
+<script type="module">
+
+import {pipe,filter,split,merge} from '../src/common.js';
+import {PDB} from '../src/pdb.js';
+import {DS} from '../src/ds.js';
+
+
+'use strict';
+
+/////////////////////// D A T A ///////////////////////
+
+let pdb = `HEADER    VIRAL PROTEIN                           04-MAY-15   4ZNI              
+TITLE     THERMUS PHAGE P74-26 LARGE TERMINASE ATPASE DOMAIN (I 2 3 SPACE GROUP)
+COMPND    MOL_ID: 1;                                                            
+COMPND   2 MOLECULE: PHAGE TERMINASE LARGE SUBUNIT;                             
+COMPND   3 CHAIN: A;                                                            
+COMPND   4 FRAGMENT: RESIDUES 1-256;                                            
+COMPND   5 ENGINEERED: YES                                                      
+SOURCE    MOL_ID: 1;                                                            
+SOURCE   2 ORGANISM_SCIENTIFIC: THERMUS PHAGE P7426;                            
+SOURCE   3 ORGANISM_TAXID: 466052;                                              
+SOURCE   4 GENE: P74P84;                                                        
+SOURCE   5 EXPRESSION_SYSTEM: ESCHERICHIA COLI;                                 
+SOURCE   6 EXPRESSION_SYSTEM_TAXID: 562;                                        
+SOURCE   7 EXPRESSION_SYSTEM_STRAIN: BLR DE3;                                   
+SOURCE   8 EXPRESSION_SYSTEM_VECTOR_TYPE: PLASMID;                              
+SOURCE   9 EXPRESSION_SYSTEM_PLASMID: PET24A                                    
+KEYWDS    DNA TRANSLOCATION, VIRAL PROTEIN                                      
+EXPDTA    X-RAY DIFFRACTION                                                     
+AUTHOR    B.J.HILBERT,J.A.HAYES,N.P.STONE,C.M.DUFFY,B.SANKARAN,B.A.KELCH        
+REVDAT   2   05-AUG-15 4ZNI    1       JRNL                                     
+REVDAT   1   08-JUL-15 4ZNI    0                                                
+JRNL        AUTH   B.J.HILBERT,J.A.HAYES,N.P.STONE,C.M.DUFFY,B.SANKARAN,        
+JRNL        AUTH 2 B.A.KELCH                                                    
+JRNL        TITL   STRUCTURE AND MECHANISM OF THE ATPASE THAT POWERS VIRAL      
+JRNL        TITL 2 GENOME PACKAGING.                                            
+JRNL        REF    PROC.NATL.ACAD.SCI.USA        V. 112 E3792 2015              
+JRNL        REFN                   ESSN 1091-6490                               
+JRNL        PMID   26150523                                                     
+JRNL        DOI    10.1073/PNAS.1506951112                                      
+`;
+
+/////////////////////// M A I N ///////////////////////
+
+let workflow = pipe(
+  split,
+  filter(PDB.byRecord('HEADER','TITLE')),
+  PDB.parse(PDB.header,PDB.title)
+);
+let data = workflow(pdb);
+console.log(JSON.stringify(data) );
+/*
+Expected result:
+[
+  {
+    "record":"HEADER",
+    "classification":"VIRAL PROTEIN",
+    "depDate":"04-MAY-15",
+    "idCode":"4ZNI"
+  },
+  {
+    "record":"TITLE",
+    "continuation": 1,
+    "title":"THERMUS PHAGE P74-26 LARGE TERMINASE ATPASE DOMAIN (I 2 3 SPACE GROUP)"
+  }
+]
+*/
+
+</script>
+</head>
+<body>
+</body>
+</html>
