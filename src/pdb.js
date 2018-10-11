@@ -76,7 +76,8 @@ export class PDB {
          Extract record and store its value
          Get the good header among the `headers` array
          For each field of the selected header
-           calculate the substring and store it in the accumulator
+           calculate each substring and store it in the accumulator with the correspond field
+        Return an array of objects
       */
     }
   }

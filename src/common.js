@@ -53,7 +53,7 @@ export const filter = (func) => (dataset) => dataset.filter(func);
 /**
 * Split function
 */
-export const split = (txt) => txt.split(/\n/);
+export const split = (txt) => txt.split(/\n/).filter( row => row.length !== 0);
 
 /**
 * Merge of two arrays with a common key

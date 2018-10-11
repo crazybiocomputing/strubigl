@@ -15,7 +15,8 @@ import {DS} from '../src/ds.js';
 
 /////////////////////// D A T A ///////////////////////
 
-let pdb = `HEADER    VIRAL PROTEIN                           04-MAY-15   4ZNI              
+let pdb = `
+HEADER    VIRAL PROTEIN                           04-MAY-15   4ZNI              
 TITLE     THERMUS PHAGE P74-26 LARGE TERMINASE ATPASE DOMAIN (I 2 3 SPACE GROUP)
 COMPND    MOL_ID: 1;                                                            
 COMPND   2 MOLECULE: PHAGE TERMINASE LARGE SUBUNIT;                             
@@ -48,11 +49,14 @@ JRNL        DOI    10.1073/PNAS.1506951112
 
 /////////////////////// M A I N ///////////////////////
 
+// Define the pipeline
 let workflow = pipe(
   split,
   filter(PDB.byRecord('HEADER','TITLE')),
   PDB.parse(PDB.header,PDB.title)
 );
+
+// Run the pipeline
 let data = workflow(pdb);
 console.log(JSON.stringify(data) );
 /*
