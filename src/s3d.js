@@ -105,7 +105,7 @@ export class S3D {
   }
 
   static rotateAtoms(a,matrix) {
-    return a.map((xyz) => S3D.transformOneAtom(xyz,matrix) );
+    return a.map((xyz) => S3D.rotateOneAtom(xyz,matrix) );
   }
 
 
@@ -162,4 +162,6 @@ export class S3D {
       return {phi: phi, psi: psi, group: ca};
     });
   }
+  
+
 } // End of class S3D
